@@ -1,15 +1,14 @@
 package com.easycompany.service;
 
 public class Employee {
-	
+
 	private String employeeid;
-	private String name;	
+	private String name;
 	private int age;
 	private String departmentid;
 	private String password;
 	private String email;
 	private String superdeptid;
-	
 	public String getEmployeeid() {
 		return employeeid;
 	}
@@ -52,5 +51,19 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public Employee(String employeeid, String name, int age, String departmentid, String password, String email) {
+		this.employeeid = employeeid;
+		this.name = name;
+		this.age = age;
+		this.departmentid = departmentid;
+		this.password = password;
+		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeid=" + employeeid + ", name=" + name + ", age=" + age + ", departmentid="
+			+ departmentid + ", password=" + password + ", email=" + email + ", superdeptid=" + superdeptid + "]";
+	}
 }

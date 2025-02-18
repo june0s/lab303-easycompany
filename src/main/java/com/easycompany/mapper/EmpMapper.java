@@ -28,7 +28,7 @@ public class EmpMapper extends EgovAbstractMapper{
 	}
 
 	public void deleteEmployee(String id) {
-		deleteEmployee(id);
+		delete("com.easycompany.mapper.EmpMapper.deleteEmployee", id);
 	}
 
 	public int insertEmployee(Employee emp) {
