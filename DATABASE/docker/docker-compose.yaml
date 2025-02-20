@@ -1,0 +1,37 @@
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_USER: user1
+      MYSQL_DATABASE: easycompany
+      MYSQL_PASSWORD: password
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_HOST: "%"
+      TZ: Asia/Seoul
+    command: # 명령어 실행 - characterset 지정
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+    volumes:
+      - "./init/:/docker-entrypoint-initdb.d/"
+    platform: linux/x86_64 #m1에서 플랫폼을 명시해주지 않으면 에러남
+    ports:
+      - "3306:3306"
+    container_name: mysql
+
+#  mysql-exam4:
+#    image: june0o/mysql8-exam:0.1
+#    ports:
+#      - "13306:3306"
+#    environment:
+#      MYSQL_USER: user1
+#      MYSQL_DATABASE: exam4
+#      MYSQL_PASSWORD: 1111!
+#      MYSQL_ROOT_PASSWORD: password
+#      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+#      TZ: Asia/Seoul
+#    container_name: mysql-exam4
+
+networks:
+  default:
+    name: dev_network

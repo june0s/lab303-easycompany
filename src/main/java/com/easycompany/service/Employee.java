@@ -52,6 +52,9 @@ public class Employee {
 		this.name = name;
 	}
 
+	public Employee() {
+	}
+
 	public Employee(String employeeid, String name, int age, String departmentid, String password, String email) {
 		this.employeeid = employeeid;
 		this.name = name;

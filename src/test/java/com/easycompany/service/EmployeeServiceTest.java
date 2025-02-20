@@ -16,7 +16,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:META-INF/spring/context-*" })
+@ContextConfiguration(locations = { "classpath:/spring/context-*" })
 @Transactional
 public class EmployeeServiceTest {
 
@@ -25,7 +25,7 @@ public class EmployeeServiceTest {
 
     @Before
     public void onSetUp() {
-//        ScriptUtils.executeSqlScript(dataSource.getConnection(), new ClassPathResource("META-INF/sampledb.sql"));
+//        ScriptUtils.executeSqlScript(dataSource.getConnection(), new ClassPathResource("/db/sampledb.sql"));
     }
 
     /**
