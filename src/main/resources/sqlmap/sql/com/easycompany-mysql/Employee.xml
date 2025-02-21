@@ -82,7 +82,7 @@
 	    <![CDATA[
 			select name
 			from employee
-			where name like '%' || #{value} || '%'
+			where name like concat('%', #{value}, '%')
 		]]>
 	</select>
 

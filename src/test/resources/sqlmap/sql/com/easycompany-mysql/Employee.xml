@@ -56,7 +56,7 @@
 		</where>
 		<![CDATA[
 
-			order by cast(employeeid as unsigned) -- mysql
+			order by cast(employeeid as unsigned)
 	        limit #{recordCountPerPage} OFFSET #{firstIndex}
         ]]>
 	</select>
@@ -82,7 +82,7 @@
 	    <![CDATA[
 			select name
 			from employee
-			where name like '%' || #{value} || '%'
+			where name like '%${value}%'
 		]]>
 	</select>
 
