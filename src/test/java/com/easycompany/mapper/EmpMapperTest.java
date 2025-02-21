@@ -24,7 +24,7 @@ public class EmpMapperTest {
     private EmpMapper empMapper;
 
     @Test
-    public void getAllEmployees() {
+    public void testGetAllEmployees() {
         // given
         Map<String, Object> map = new HashMap<>();
         // mysql 에서는 아래 2 인자 넣어줘야 한다!
@@ -39,7 +39,7 @@ public class EmpMapperTest {
     }
 
     @Test
-    public void getAllEmployees_bySearchID() {
+    public void testGetAllEmployees_bySearchID() {
         // given
         String id = "2000";
         Employee employee = new Employee(id, "tom", 20, "1200", "1234", "tom@tams.com");
@@ -63,7 +63,7 @@ public class EmpMapperTest {
 
     // 부서 id로 조회
     @Test
-    public void getAllEmployees_byDepartmentID() throws Exception {
+    public void testGetAllEmployees_byDepartmentID() throws Exception {
         // given
         String id = "2000";
         String deptId = "5200";
@@ -89,7 +89,7 @@ public class EmpMapperTest {
 
     // 이름으로 조회
     @Test
-    public void getAllEmployees_byName() throws Exception {
+    public void testGetAllEmployees_byName() throws Exception {
         // given
         String id = "2000";
         String deptId = "5200";
@@ -115,7 +115,7 @@ public class EmpMapperTest {
 
     // id & 부서id 검색
     @Test
-    public void getAllEmployees_byIdAndDeptId() throws Exception {
+    public void testGetAllEmployees_byIdAndDeptId() throws Exception {
         // given
         String id = "2000";
         String deptId = "5200";
@@ -146,7 +146,7 @@ public class EmpMapperTest {
 
     // id & 이름 검색
     @Test
-    public void getAllEmployees_byIdAndName() throws Exception {
+    public void testGetAllEmployees_byIdAndName() throws Exception {
         // given
         String id = "2000";
         String deptId = "5200";
@@ -177,7 +177,7 @@ public class EmpMapperTest {
 
     // 부서id & 이름 검색
     @Test
-    public void getAllEmployees_byDeptidAndName() throws Exception {
+    public void testGetAllEmployees_byDeptidAndName() throws Exception {
         // given
         String id = "2000";
         String deptId = "5200";
@@ -208,7 +208,7 @@ public class EmpMapperTest {
 
     // page 개수 테스트
     @Test
-    public void getAllEmployees_page() throws Exception {
+    public void testGetAllEmployees_page() throws Exception {
         // given
         String id = "2000";
         String deptId = "1200";
@@ -234,7 +234,7 @@ public class EmpMapperTest {
 
     // page 개수 테스트 (직원수보다 더 큰 숫자로 조회)
     @Test
-    public void getAllEmployees_pageOver() throws Exception {
+    public void testGetAllEmployees_pageOver() throws Exception {
         // given
         String id = "2000";
         String deptId = "1200";
@@ -263,7 +263,7 @@ public class EmpMapperTest {
 
     // offset  테스트
     @Test
-    public void getAllEmployees_offset() throws Exception {
+    public void testGetAllEmployees_offset() throws Exception {
         // given
 //        String id = "2000";
 //        String deptId = "1200";
@@ -290,7 +290,7 @@ public class EmpMapperTest {
 
     // offset(시작 위치)  테스트
     @Test
-    public void getAllEmployees_offsetNext() throws Exception {
+    public void testGetAllEmployees_offsetNext() throws Exception {
         // given
         Map<String, Object> map = new HashMap<>();
         int pageNum = 10;
@@ -312,7 +312,7 @@ public class EmpMapperTest {
 
     // offset(시작 위치)  테스트
     @Test
-    public void getAllEmployees_offsetOver() throws Exception {
+    public void testGetAllEmployees_offsetOver() throws Exception {
         // given
         Map<String, Object> map = new HashMap<>();
         int pageNum = 10;
@@ -330,7 +330,7 @@ public class EmpMapperTest {
 
     // ID로 조회
     @Test
-    public void getEmployeeInfoById() {
+    public void testGetEmployeeInfoById() {
         // given
         String id = "2000";
         String deptId = "1200";
@@ -351,7 +351,7 @@ public class EmpMapperTest {
 
     // 삭제
     @Test
-    public void deleteEmployee() {
+    public void testDeleteEmployee() {
         // given
         String id = "2000";
         String deptId = "1200";
@@ -370,7 +370,7 @@ public class EmpMapperTest {
 
     // 추가
     @Test
-    public void insertEmployee() {
+    public void testInsertEmployee() {
         // given
         String id = "2000";
         String deptId = "1200";
@@ -390,7 +390,7 @@ public class EmpMapperTest {
     }
 
     @Test
-    public void updateEmployee() {
+    public void testUpdateEmployee() {
         // given
         String id = "2000";
         String deptId = "1200";
@@ -419,7 +419,7 @@ public class EmpMapperTest {
 
     // 유사 이름 검색
     @Test
-    public void getNameListForSuggest() {
+    public void testGetNameListForSuggest() {
         // given
         String prefix = "Kim";
         Map<String, Object> map = new HashMap<>();
@@ -439,7 +439,7 @@ public class EmpMapperTest {
     }
 
     @Test
-    public void getEmployeeCount() {
+    public void testGetEmployeeCount() {
         Map<String, Object> map = new HashMap<>();
 
         int count = empMapper.getEmployeeCount(map);

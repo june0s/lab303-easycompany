@@ -95,7 +95,7 @@ public class EmployeeServiceTest {
     @Test
     public void testAddEmployee() {
         // given
-        String id = "1000";
+        String id = "2000";
         Employee employee = new Employee(id, "tom", 20, "1200", "1234", "tom@tams.com");
 
         // when
@@ -155,7 +155,7 @@ public class EmployeeServiceTest {
     @Test
     public void testUpdateEmployeeNotExist() throws Exception {
         // given
-        String id = "1000";
+        String id = "2000";
 //        Employee employee = new Employee(id, "tom", 20, "1200", "1234", "tom@tams.com");
 //        employeeService.insertEmployee(employee);
         Employee find = employeeService.getEmployeeInfoById(id);
