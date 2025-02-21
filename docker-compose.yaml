@@ -13,11 +13,22 @@ services:
       - --collation-server=utf8mb4_unicode_ci
       - --skip-character-set-client-handshake
     volumes:
-      - "./init/:/docker-entrypoint-initdb.d/"
+      - "./DATABASE/docker/init/:/docker-entrypoint-initdb.d/"
     platform: linux/x86_64 #m1에서 플랫폼을 명시해주지 않으면 에러남
     ports:
       - "3306:3306"
     container_name: mysql
+
+  easycom:
+    image: june0o/lab303-ec:0.2
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      TZ: Asiz/Seoul
+      db_url: "jdbc:mysql://mysql:3306/easycompany?useUnicode=true"
+    container_name: easycom
 
 #  mysql-exam4:
 #    image: june0o/mysql8-exam:0.1
