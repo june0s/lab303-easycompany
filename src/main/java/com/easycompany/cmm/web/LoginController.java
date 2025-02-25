@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,7 @@ import com.easycompany.cmm.service.SampleService;
 import com.easycompany.cmm.vo.Account;
 
 @Controller
+@PropertySource("classpath:/property/db.properties")
 public class LoginController {
 
     @Autowired
@@ -26,6 +29,9 @@ public class LoginController {
 
     private final Log log = LogFactory.getLog(LoginController.class);
 
+    @Autowired
+    Environment env;
+
     /**
      * 사용자로 부터 아이디, 패스워드를 입력받아 인증 성공이면 세션 객체에 계정정보를 담고 사원정보리스트 페이지로 포워딩한다. 인증에
      * 실패하면 로그인 페이지로 다시 리턴한다.
@@ -33,6 +39,10 @@ public class LoginController {
     @RequestMapping("/loginProcess.do")
     public String login(HttpServletRequest request, @RequestParam("id") String id,
             @RequestParam("password") String password) {
+
+        log.info("+ db.url = " + env.getProperty("db.url"));
+        log.info("+ db.username = " + env.getProperty("db.username"));
+        log.info("+ db.password = " + env.getProperty("db.password"));
 
         log.info("+ login() id = " + id + ", pw = " + password);
 
