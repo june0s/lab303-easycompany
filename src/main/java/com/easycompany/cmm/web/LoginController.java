@@ -42,7 +42,7 @@ public class LoginController {
 
         log.info("+ db.url = " + env.getProperty("db.url"));
         log.info("+ db.username = " + env.getProperty("db.username"));
-        log.info("+ db.password = " + env.getProperty("db.password"));
+//        log.info("+ db.password = " + env.getProperty("db.password"));
 
         log.info("+ login() id = " + id + ", pw = " + password);
 

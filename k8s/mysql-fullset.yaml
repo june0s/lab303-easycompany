@@ -1,0 +1,145 @@
+---
+apiVersion: v1
+data:
+  MYSQL_ROOT_HOST: "%"
+  MYSQL_USER: "user1"
+kind: ConfigMap
+metadata:
+  name: mysql-cm
+
+---
+apiVersion: v1
+data:
+  MYSQL_PASSWORD: MTExMSE=
+  MYSQL_ROOT_PASSWORD: MTExMSE=
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mysql
+  name: mysql
+spec:
+  ports:
+    - port: 3306
+      protocol: TCP
+      targetPort: 3306
+  selector:
+    app: mysql
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mysql
+  name: mysql-headless
+spec:
+  clusterIP: None
+  ports:
+    - port: 3306
+      protocol: TCP
+      targetPort: 3306
+  selector:
+    app: mysql
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: mysql
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: mysql-headless
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - image: mysql:5.7
+          name: mysql
+          args:
+            - --character-set-server=utf8mb4
+            - --collation-server=utf8mb4_unicode_ci
+            - --skip-character-set-client-handshake
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-cm
+                  key: MYSQL_USER
+            - name: MYSQL_ROOT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-cm
+                  key: MYSQL_ROOT_HOST
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+          volumeMounts:
+            # data 관련 볼륨 마운트
+#            - name: data-volume
+#              mountPath: /var/lib/mysql
+            # 타임존 관련 볼륨 마운트
+            - name: timezone-config
+              mountPath: /etc/localtime
+            # 초기 데이터 마운트
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        # data 관련 볼륨 설정
+        # - name: data-volume
+        #   hostPath:
+        #     path: /data/mysqldata
+        #     type: Directory
+
+        # 타임존 관련 볼륨 설정
+        - name: timezone-config
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul
+        # 초기 데이터 설정
+        - name: initdb
+          configMap:
+            name: mysql-init-cm
+            items:
+              - key: init.sql
+                path: init.sql
+
+#  volumeClaimTemplates:
+#    - apiVersion: v1
+#      kind: PersistentVolumeClaim
+#      metadata:
+#        name: data-volume
+#      spec:
+#        accessModes:
+#          - ReadWriteOnce
+#        resources:
+#          requests:
+#            storage: 1Gi
+#        storageClassName: nfs-csi
+#        volumeMode: Filesystem

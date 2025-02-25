@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+data:
+  MYSQL_USER: "user1"
+kind: ConfigMap
+metadata:
+  name: lab303-cm
+
+---
+apiVersion: v1
+data:
+  MYSQL_PASSWORD: MTExMSE=
+kind: Secret
+metadata:
+  name: lab303-secret
+type: Opaque
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: lab303
+  name: lab303
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: lab303
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: lab303
+  name: lab303
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lab303
+  template:
+    metadata:
+      labels:
+        app: lab303
+    spec:
+      containers:
+        - image: cndc.acloud.run/cndc/lab303:dev-20250225-083543
+          name: lab303
+          ports:
+            - containerPort: 8080
+          env:
+            - name: db.username
+              valueFrom:
+                configMapKeyRef:
+                  name: lab303-cm
+                  key: MYSQL_USER
+            - name: db.password
+              valueFrom:
+                secretKeyRef:
+                  name: lab303-secret
+                  key: MYSQL_PASSWORD
+            - name: db_url
+              value: "jdbc:mysql://mysql:3306/easycompany?useUnicode=true"
+            - name: TZ
+              value: "Asia/Seoul"
+          resources:
+            limits:
+              cpu: "1"
+              memory: "2Gi"
